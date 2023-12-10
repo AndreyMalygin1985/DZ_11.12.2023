@@ -2,8 +2,9 @@
 #include<Windows.h>
 #include <cstdlib>
 #include <ctime>
+#include "Matrix.h"
 
-using namespace std;
+//using namespace std;
 
 // Создайте шаблонный класс матрица.Необходимо реализовать 
 // динамическое выделение памяти, очистку памяти,заполнение
@@ -12,115 +13,12 @@ using namespace std;
 // перегруженных операторов (+, –, *, / ),
 // поиск максимального элемента.
 
-template <typename T>
-class Matrix {
-    int rows;
-    int cols;
-    T** data;
-public:
-    Matrix(int rows, int cols) : rows(rows), cols(cols) {
-        data = new T * [rows];
-        for (int i = 0; i < rows; ++i) {
-            data[i] = new T[cols];
-        }
-    }
-
-    ~Matrix() {
-        for (int i = 0; i < rows; ++i) {
-            delete[] data[i];
-        }
-        delete[] data;
-    }
-
-    void fillFromKeyboard() {
-        std::cout << "Введите элементы матрицы:" << std::endl;
-        for (int i = 0; i < rows; ++i) {
-            for (int j = 0; j < cols; ++j) {
-                cin >> data[i][j];
-            }
-        }
-    }
-
-    void fillWithRandomValues() {
-        srand((unsigned)time(NULL));
-        for (int i = 0; i < rows; ++i) {
-            for (int j = 0; j < cols; ++j) {
-                data[i][j] = rand() % 99;
-            }
-        }
-    }
-
-    void display() {
-        for (int i = 0; i < rows; ++i) {
-            for (int j = 0; j < cols; ++j) {
-                cout << data[i][j] << " ";
-            }
-            cout << endl;
-        }
-    }
-
-    Matrix<T> operator+(const Matrix<T>& other) {
-        Matrix<T> result(rows, cols);
-        for (int i = 0; i < rows; ++i) {
-            for (int j = 0; j < cols; ++j) {
-                result.data[i][j] = data[i][j] + other.data[i][j];
-            }
-        }
-        return result;
-    }
-    
-    Matrix<T>operator-(const Matrix<T>& other)
-    {
-        Matrix<T> subtraction(rows, cols);
-        for (int i = 0; i < rows; ++i) {
-            for (int j = 0; j < cols; ++j) {
-                subtraction.data[i][j] = data[i][j] - other.data[i][j];
-            }
-        }
-        return subtraction;
-    }
-
-    Matrix<T> operator*(const Matrix<T>& other)
-    {
-        Matrix<T> multiplication(rows, cols);
-        for (int i = 0; i < rows; ++i) {
-            for (int j = 0; j < cols; ++j) {
-                multiplication.data[i][j] = data[i][j] * other.data[i][j];
-            }
-        }
-        return multiplication;
-    }
-
-    Matrix<T> operator/(const Matrix<T>& other)
-    {
-        Matrix<T> division(rows, cols);
-        for (int i = 0; i < rows; ++i) {
-            for (int j = 0; j < cols; ++j) {
-                division.data[i][j] = data[i][j] / other.data[i][j];
-            }
-        }
-        return division;
-    }
-
-    T findMaxElement() {
-        T maxElement = data[0][0];
-        for (int i = 0; i < rows; ++i) {
-            for (int j = 0; j < cols; ++j) {
-                if (data[i][j] > maxElement) {
-                    maxElement = data[i][j];
-                }
-            }
-        }
-        return maxElement;
-    }
-};
-
 int main()
 {
 	SetConsoleOutputCP(1251);
 
-    Matrix<int> matrix1(2, 2);
-    Matrix<int> matrix2(2, 2);
+    Matrix<int> matrix1(3, 3);
+    Matrix<int> matrix2(3, 3);
 
     cout << "Заполняем первую матрицу:" << endl;
     matrix1.fillFromKeyboard();
@@ -136,6 +34,19 @@ int main()
     Matrix<int> sumMatrix = matrix1 + matrix2;
     cout << "Сумма матриц:" << endl;
     sumMatrix.display();
+
+    Matrix<int> diffMatrix = matrix1 - matrix2;
+    cout << "Из Первой матрицы вычитаем Вторую:" << endl;
+    diffMatrix.display();
+
+    Matrix<int> multMatrix = matrix1 * matrix2;
+    cout << "Произведение двух матриц:" << endl;
+    multMatrix.display();
+
+    Matrix<int> divMatrix = matrix1 / matrix2;
+    cout << "Разделили Первую матрицу на Вторую матрицу:" << endl;
+    divMatrix.display();
+
 
     int maxElement = matrix1.findMaxElement();
     cout << "Максимальный элемент в первой матрице: " << maxElement << endl;
