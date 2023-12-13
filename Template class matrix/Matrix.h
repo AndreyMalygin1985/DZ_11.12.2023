@@ -12,6 +12,9 @@ class Matrix {
     int cols;
     T_T** data;
 public:
+
+    Matrix() : data(nullptr), rows(0), cols(0) {}
+
     Matrix(int rows, int cols) : rows(rows), cols(cols) {
         data = new T_T * [rows];
         for (int i = 0; i < rows; ++i) {
@@ -53,58 +56,58 @@ public:
         }
     }
 
-    Matrix<T_T> operator+(const Matrix<T_T>& other) {
+    Matrix<T_T> operator+(const Matrix<T_T>& oth) {
         Matrix<T_T> addition(rows, cols);
         for (int i = 0; i < rows; ++i) {
             for (int j = 0; j < cols; ++j) {
-                addition.data[i][j] = data[i][j] + other.data[i][j];
+                addition.data[i][j] = data[i][j] + oth.data[i][j];
             }
         }
         return addition;
     }
 
-    Matrix<T_T> operator-(const Matrix<T_T>& other)
+    Matrix<T_T> operator-(const Matrix<T_T>& oth)
     {
         Matrix<T_T> subtraction(rows, cols);
         for (int i = 0; i < rows; ++i) {
             for (int j = 0; j < cols; ++j) {
-                subtraction.data[i][j] = data[i][j] - other.data[i][j];
+                subtraction.data[i][j] = data[i][j] - oth.data[i][j];
             }
         }
         return subtraction;
     }
 
-    Matrix<T_T> operator*(const Matrix<T_T>& other)
+    Matrix<T_T> operator*(const Matrix<T_T>& oth)
     {
         Matrix<T_T> multiplication(rows, cols);
         for (int i = 0; i < rows; ++i) {
             for (int j = 0; j < cols; ++j) {
-                multiplication.data[i][j] = data[i][j] * other.data[i][j];
+                multiplication.data[i][j] = data[i][j] * oth.data[i][j];
             }
         }
         return multiplication;
     }
 
-    Matrix<T_T> operator/(const Matrix<T_T>& other)
+    Matrix<T_T> operator/(const Matrix<T_T>& oth)
     {
         Matrix<T_T> division(rows, cols);
         for (int i = 0; i < rows; ++i) {
             for (int j = 0; j < cols; ++j) {
-                division.data[i][j] = data[i][j] / other.data[i][j];
+                division.data[i][j] = data[i][j] / oth.data[i][j];
             }
         }
         return division;
     }
 
     T_T findMaxElement() {
-        T_T maxElement = data[0][0];
+        T_T maxElem = data[0][0];
         for (int i = 0; i < rows; ++i) {
             for (int j = 0; j < cols; ++j) {
-                if (data[i][j] > maxElement) {
-                    maxElement = data[i][j];
+                if (data[i][j] > maxElem) {
+                    maxElem = data[i][j];
                 }
             }
         }
-        return maxElement;
+        return maxElem;
     }
 };
